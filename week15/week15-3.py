@@ -1,0 +1,12 @@
+#week15-3.py
+#leetcode 714
+class Solution:
+    def maxProfit(self, prices: List[int], fee: int) -> int:
+        @cache
+        def helper(i,hasStack):
+            if i==len(prices):return 0
+            if hasStack: ans=prices[i]+helper(i+1,False)-fee
+            else: ans=-prices[i]+helper(i+1,True)
+            helper(i+1,hasStack)
+            return max(ans,helper(i+1,hasStack))
+        return helper(0,False)
